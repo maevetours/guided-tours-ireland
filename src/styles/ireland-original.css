@@ -1,0 +1,598 @@
+/* Copy of original CSS from guidedtourstoireland.com */
+/* This is the exact CSS from the live site with Kevin Powell-quality responsive design */
+
+/* CSS Reset and Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px; /* Base for REM calculations */
+    line-height: 1.5;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background-color: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* CSS Custom Properties */
+:root {
+    /* Typography */
+    --font-heading: "Georgia", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    
+    /* Color Palette - Using HSL format */
+    --background: 0 0% 99%; /* #FCFCFC - Off-white */
+    --surface: 0 0% 100%; /* #FFFFFF - Pure white */
+    --text-primary: 222 21% 23%; /* #343A46 - Dark slate */
+    --text-secondary: 222 13% 45%; /* #697586 - Medium slate */
+    --text-muted: 222 8% 62%; /* #959BA8 - Light slate */
+    --accent-primary: 155 35% 30%; /* #326B4A - Deep green */
+    --accent-light: 155 20% 92%; /* #EBF4EF - Very light green */
+    --border: 222 8% 90%; /* #E5E7EA - Light border */
+    --shadow: 222 21% 23%; /* #343A46 - Dark slate for shadows */
+    
+    /* Spacing (8px baseline grid) */
+    --space-xs: 0.5rem; /* 8px */
+    --space-sm: 1rem; /* 16px */
+    --space-md: 1.5rem; /* 24px */
+    --space-lg: 2rem; /* 32px */
+    --space-xl: 3rem; /* 48px */
+    --space-xxl: 4rem; /* 64px */
+    --space-xxxl: 6rem; /* 96px */
+    
+    /* Typography Scale */
+    --text-xs: 0.875rem; /* 14px */
+    --text-sm: 1rem; /* 16px */
+    --text-md: 1.125rem; /* 18px */
+    --text-lg: 1.25rem; /* 20px */
+    --text-xl: 1.5rem; /* 24px */
+    --text-xxl: 2rem; /* 32px */
+    --text-xxxl: 2.5rem; /* 40px */
+    --text-display: 3rem; /* 48px */
+    
+    /* Layout */
+    --container-max: 1200px;
+    --border-radius: 0.5rem;
+    --shadow-sm: 0 1px 3px hsla(var(--shadow), 0.1);
+    --shadow-md: 0 4px 12px hsla(var(--shadow), 0.15);
+    --shadow-lg: 0 8px 24px hsla(var(--shadow), 0.2);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.2;
+    color: hsl(var(--text-primary));
+}
+
+h1 {
+    font-size: var(--text-display);
+    margin-bottom: var(--space-md);
+}
+
+h2 {
+    font-size: var(--text-xxxl);
+    margin-bottom: var(--space-lg);
+}
+
+h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+}
+
+p {
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: hsl(var(--text-secondary));
+    margin-bottom: var(--space-sm);
+}
+
+/* Layout Components */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* Header Styles */
+.header {
+    background-color: hsl(var(--surface));
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: hsl(var(--text-primary));
+}
+
+.logo-img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.logo-text {
+    font-size: var(--text-lg);
+    font-weight: 500;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2rem;
+    height: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: hsl(var(--text-primary));
+    transition: all 0.3s ease;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: hsl(var(--text-secondary));
+    font-size: var(--text-sm);
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: var(--space-xs) 0;
+}
+
+.nav-link:hover {
+    color: hsl(var(--accent-primary));
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('irish-cliffs.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-title {
+    font-size: var(--text-display);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    color: white;
+}
+
+.hero-subtitle {
+    font-size: var(--text-xl);
+    font-weight: 300;
+    margin-bottom: var(--space-xl);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Buttons */
+.cta-button {
+    display: inline-block;
+    background-color: hsl(var(--accent-primary));
+    color: white;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--text-md);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.cta-button:hover {
+    background-color: hsl(var(--accent-primary) / 0.9);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Features Section */
+.features {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--background));
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-xxl);
+}
+
+.section-title {
+    font-size: var(--text-xxxl);
+    font-weight: 400;
+    color: hsl(var(--text-primary));
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-lg);
+}
+
+.feature-card {
+    background-color: hsl(var(--surface));
+    padding: var(--space-xl);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-icon {
+    color: hsl(var(--accent-primary));
+    margin-bottom: var(--space-md);
+}
+
+.feature-title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+}
+
+.feature-description {
+    color: hsl(var(--text-secondary));
+}
+
+/* Tours Section */
+.tours {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--surface));
+}
+
+.tours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+/* Tour Card Flip Animation */
+.tour-card-container {
+    cursor: pointer;
+    perspective: 1000px;
+    height: 320px;
+    position: relative;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.tour-card-container:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+.flip-card-front {
+    background-color: hsl(var(--accent-primary));
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flip-card-back {
+    background-color: hsl(var(--surface));
+    transform: rotateY(180deg);
+}
+
+.tour-title {
+    color: white;
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-md);
+}
+
+.tour-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+}
+
+.tour-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius);
+}
+
+/* Testimonials */
+.featured-testimonial {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--accent-light));
+    text-align: center;
+}
+
+.testimonial-quote {
+    font-size: var(--text-xxl);
+    font-style: italic;
+    color: hsl(var(--text-primary));
+    max-width: 800px;
+    margin: 0 auto var(--space-lg);
+    line-height: 1.6;
+}
+
+.testimonial-attribution {
+    font-size: var(--text-md);
+    color: hsl(var(--text-secondary));
+}
+
+/* Reviews Grid */
+.reviews {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--background));
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.review-card {
+    background-color: hsl(var(--surface));
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.review-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: hsl(var(--accent-primary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    margin: 0 auto var(--space-md);
+}
+
+.review-text {
+    font-style: italic;
+    margin-bottom: var(--space-sm);
+}
+
+.review-author {
+    font-size: var(--text-sm);
+    color: hsl(var(--text-secondary));
+}
+
+/* Contact Form */
+.contact {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--surface));
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: hsl(var(--text-primary));
+    margin-bottom: var(--space-xs);
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--border-radius) / 2);
+    font-size: var(--text-sm);
+    font-family: inherit;
+    background-color: hsl(var(--background));
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: hsl(var(--accent-primary));
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Footer */
+.footer {
+    background-color: hsl(var(--text-primary));
+    color: white;
+    padding: var(--space-xl) 0;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    :root {
+        --text-display: 2rem; /* 32px */
+        --text-xxxl: 1.875rem; /* 30px */
+        --text-xxl: 1.5rem; /* 24px */
+        --text-xl: 1.25rem; /* 20px */
+    }
+    
+    .container {
+        padding: 0 var(--space-sm);
+    }
+    
+    .nav-wrapper {
+        height: 4rem;
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-list {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(52, 58, 70, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-xl);
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+        padding: 0;
+    }
+    
+    .nav-list.active {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-list li {
+        padding: 0;
+    }
+    
+    .nav-link {
+        color: white;
+        font-size: var(--text-lg);
+        padding: var(--space-sm);
+    }
+    
+    .hero {
+        min-height: 80vh;
+    }
+    
+    .hero-title {
+        font-size: var(--text-xxl);
+    }
+    
+    .hero-subtitle {
+        font-size: var(--text-md);
+    }
+    
+    .features-grid,
+    .tours-grid,
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .tour-card-container {
+        height: 280px;
+    }
+    
+    .testimonial-quote {
+        font-size: var(--text-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .phone-input-group {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .country-select {
+        min-width: auto;
+        width: 100%;
+    }
+}
