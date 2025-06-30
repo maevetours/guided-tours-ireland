@@ -596,3 +596,131 @@ p {
         width: 100%;
     }
 }
+
+/* Guides/Chauffeur Section */
+.guides {
+    padding: var(--space-xxxl) 0;
+    background-color: hsl(var(--background));
+}
+
+.section-description {
+    font-size: var(--text-md);
+    color: hsl(var(--text-secondary));
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.guide-profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xxxl);
+    align-items: center;
+    margin-bottom: var(--space-xxxl);
+    padding: var(--space-xl) 0;
+}
+
+.guide-image-carousel {
+    position: relative;
+}
+
+.carousel-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.carousel-slide {
+    display: none;
+}
+
+.carousel-slide.active {
+    display: block;
+}
+
+.guide-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+.guide-info {
+    padding: var(--space-lg);
+}
+
+.guide-name {
+    font-size: var(--text-xxl);
+    color: hsl(var(--text-primary));
+    margin-bottom: var(--space-xs);
+}
+
+.guide-title {
+    font-size: var(--text-lg);
+    color: hsl(var(--accent-primary));
+    margin-bottom: var(--space-md);
+}
+
+.guide-bio {
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: hsl(var(--text-secondary));
+    margin-bottom: var(--space-lg);
+}
+
+.guide-specs {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.spec-item {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.spec-label {
+    font-weight: 500;
+    color: hsl(var(--text-primary));
+    min-width: 120px;
+}
+
+.spec-value {
+    color: hsl(var(--text-secondary));
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: hsl(var(--border));
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: hsl(var(--accent-primary));
+}
+
+/* Responsive for guides section */
+@media (max-width: 768px) {
+    .guide-profile {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+    
+    .guide-info {
+        padding: var(--space-md);
+    }
+    
+    .spec-label {
+        min-width: 100px;
+    }
+}
