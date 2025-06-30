@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://guidedtourstoireland.github.io',
+  site: 'https://maevetours.github.io',
+  base: '/guided-tours-ireland',
   integrations: [
     mdx(),
     sitemap(),
