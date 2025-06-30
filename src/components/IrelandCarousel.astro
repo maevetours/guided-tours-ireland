@@ -1,0 +1,325 @@
+---
+import content from '../data/content.json';
+
+export interface Props {
+  images?: string[];
+  autoPlay?: boolean;
+  interval?: number;
+}
+
+const { 
+  images = [
+    'maeve-1.jpg', 'maeve-2.jpg', 'maeve-3.jpg', 
+    'maeve-5.jpg', 'maeve-6.jpg', 'maeve-7.jpg'
+  ],
+  autoPlay = true,
+  interval = 5000
+} = Astro.props;
+
+// Get CDN URLs
+const cdnUrls = content.cdnUrls || {};
+---
+
+<div class="carousel" data-carousel data-autoplay={autoPlay} data-interval={interval}>
+  <div class="carousel-viewport">
+    <div class="carousel-track" data-carousel-track>
+      {images.map((image, index) => {
+        const imageUrl = cdnUrls[image] || `/images/${image}`;
+        return (
+          <div class="carousel-slide" data-slide={index}>
+            <picture>
+              <source 
+                media="(max-width: 640px)" 
+                srcset={imageUrl}
+              />
+              <source 
+                media="(max-width: 1024px)" 
+                srcset={imageUrl}
+              />
+              <img 
+                src={imageUrl}
+                alt={`Tour image ${index + 1}`}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            </picture>
+          </div>
+        );
+      }
+      ))}
+    </div>
+  </div>
+  
+  <!-- Touch-friendly navigation -->
+  <button class="carousel-nav prev" aria-label="Previous image" data-carousel-prev>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  
+  <button class="carousel-nav next" aria-label="Next image" data-carousel-next>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  
+  <!-- Dots indicator -->
+  <div class="carousel-dots" data-carousel-dots>
+    {images.map((_, index) => (
+      <button 
+        class="carousel-dot" 
+        aria-label={`Go to slide ${index + 1}`}
+        data-carousel-dot={index}
+      />
+    ))}
+  </div>
+</div>
+
+<style>
+  .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: #f3f4f6;
+  }
+  
+  .carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-viewport {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carousel-viewport {
+      aspect-ratio: 1 / 1;
+    }
+  }
+  
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 100%;
+    position: relative;
+    height: 100%;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+  
+  .carousel-nav:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .carousel-nav.prev { left: 1rem; }
+  .carousel-nav.next { right: 1rem; }
+  
+  @media (max-width: 640px) {
+    .carousel-nav {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .carousel-nav.prev { left: 0.5rem; }
+    .carousel-nav.next { right: 0.5rem; }
+  }
+  
+  .carousel-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
+    backdrop-filter: blur(10px);
+  }
+  
+  .carousel-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .carousel-dot[aria-current="true"] {
+    background: white;
+    width: 1.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  class Carousel {
+    constructor(element) {
+      this.carousel = element;
+      this.track = element.querySelector('[data-carousel-track]');
+      this.slides = [...element.querySelectorAll('[data-slide]')];
+      this.dots = [...element.querySelectorAll('[data-carousel-dot]')];
+      this.prevBtn = element.querySelector('[data-carousel-prev]');
+      this.nextBtn = element.querySelector('[data-carousel-next]');
+      
+      this.currentIndex = 0;
+      this.autoPlay = element.dataset.autoplay === 'true';
+      this.interval = parseInt(element.dataset.interval) || 5000;
+      this.autoPlayTimer = null;
+      
+      this.init();
+    }
+    
+    init() {
+      // Set initial state
+      this.updateCarousel();
+      
+      // Event listeners
+      this.prevBtn?.addEventListener('click', () => this.prev());
+      this.nextBtn?.addEventListener('click', () => this.next());
+      
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+      
+      // Touch support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      this.carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      
+      this.carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe();
+      }, { passive: true });
+      
+      const handleSwipe = () => {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            this.next();
+          } else {
+            this.prev();
+          }
+        }
+      };
+      
+      this.handleSwipe = handleSwipe;
+      
+      // Auto play
+      if (this.autoPlay) {
+        this.startAutoPlay();
+        
+        // Pause on hover/focus
+        this.carousel.addEventListener('mouseenter', () => this.stopAutoPlay());
+        this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+        this.carousel.addEventListener('focusin', () => this.stopAutoPlay());
+        this.carousel.addEventListener('focusout', () => this.startAutoPlay());
+      }
+      
+      // Keyboard navigation
+      this.carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') this.prev();
+        if (e.key === 'ArrowRight') this.next();
+      });
+    }
+    
+    updateCarousel() {
+      const offset = -this.currentIndex * 100;
+      this.track.style.transform = `translateX(${offset}%)`;
+      
+      // Update dots
+      this.dots.forEach((dot, index) => {
+        dot.setAttribute('aria-current', index === this.currentIndex);
+      });
+    }
+    
+    goToSlide(index) {
+      this.currentIndex = index;
+      this.updateCarousel();
+      this.restartAutoPlay();
+    }
+    
+    next() {
+      this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+      this.updateCarousel();
+      this.restartAutoPlay();
+    }
+    
+    prev() {
+      this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+      this.updateCarousel();
+      this.restartAutoPlay();
+    }
+    
+    startAutoPlay() {
+      if (!this.autoPlay) return;
+      this.autoPlayTimer = setInterval(() => this.next(), this.interval);
+    }
+    
+    stopAutoPlay() {
+      if (this.autoPlayTimer) {
+        clearInterval(this.autoPlayTimer);
+        this.autoPlayTimer = null;
+      }
+    }
+    
+    restartAutoPlay() {
+      this.stopAutoPlay();
+      this.startAutoPlay();
+    }
+  }
+  
+  // Initialize all carousels
+  document.querySelectorAll('[data-carousel]').forEach(carousel => {
+    new Carousel(carousel);
+  });
+</script>

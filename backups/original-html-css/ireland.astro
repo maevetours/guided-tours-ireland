@@ -1,0 +1,423 @@
+---
+import IrelandLayout from '../layouts/IrelandLayout.astro';
+import IrelandNav from '../components/IrelandNav.astro';
+import IrelandCarousel from '../components/IrelandCarousel.astro';
+import content from '../data/content.json';
+import '../styles/ireland.css';
+---
+
+<IrelandLayout>
+  <IrelandNav />
+  
+  <!-- Hero Section -->
+  <section class="hero" style={`--hero-image: url('/images/${content.hero.backgroundImage}')`}>
+    <div class="hero-content flow">
+      <h1 class="hero-title text-balance">{content.hero.title}<br/>{content.hero.subtitle}</h1>
+      <p class="hero-description">{content.hero.description}</p>
+      <a href={content.hero.ctaLink} class="button button--large">
+        {content.hero.ctaText}
+      </a>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container flow">
+      <div class="section-header text-center">
+        <h2 class="section-title">Why Choose Our Private Tours</h2>
+      </div>
+      
+      <div class="grid" data-layout="cards">
+        {content.features.map((feature) => (
+          <article class="feature-card flow">
+            <div class="feature-icon" aria-hidden="true">
+              {feature.icon === 'shield' && (
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M24 4L6 14v20c0 11.05 7.7 21.35 18 24 10.3-2.65 18-12.95 18-24V14L24 4z" 
+                    stroke="currentColor" stroke-width="2" fill="none"/>
+                  <path d="M18 24l6 6 12-12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              )}
+              {feature.icon === 'customize' && (
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2" fill="none"/>
+                  <path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              )}
+              {feature.icon === 'comfort' && (
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M20 6a14 14 0 1 0 14 14c0-9.33-8-24-14-24z" 
+                    stroke="currentColor" stroke-width="2" fill="none"/>
+                  <path d="M24 20a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" 
+                    stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+              )}
+            </div>
+            <h3 class="feature-title">{feature.title}</h3>
+            <p class="feature-description">{feature.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Tours Section -->
+  <section class="section section--alt" id="tours">
+    <div class="container flow">
+      <div class="section-header text-center">
+        <h2 class="section-title">Featured Experiences</h2>
+        <p class="section-subtitle">Each journey is crafted to your interests</p>
+      </div>
+      
+      <div class="grid" data-layout="cards">
+        {content.tours.filter(tour => tour.featured).map((tour) => (
+          <article class="tour-card">
+            <div class="tour-image">
+              <img 
+                src={`/images/${tour.image}`} 
+                alt={tour.title}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="tour-content flow">
+              <h3 class="tour-title">{tour.title}</h3>
+              <p class="tour-description">{tour.shortDescription}</p>
+              <button class="button button--secondary" data-tour={tour.id}>
+                Learn More
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Gallery Section -->
+  <section class="section">
+    <div class="container flow">
+      <div class="section-header text-center">
+        <h2 class="section-title">Your Journey Awaits</h2>
+      </div>
+      
+      <IrelandCarousel />
+    </div>
+  </section>
+  
+  <!-- Testimonials -->
+  <section class="section section--alt" id="testimonials">
+    <div class="container flow">
+      <div class="section-header text-center">
+        <h2 class="section-title">Stories from Our Guests</h2>
+      </div>
+      
+      <div class="grid" data-layout="cards">
+        {content.testimonials.map((testimonial) => (
+          <blockquote class="testimonial-card flow">
+            <div class="testimonial-stars" aria-label={`${testimonial.rating} out of 5 stars`}>
+              {'★'.repeat(testimonial.rating)}
+            </div>
+            <p class="testimonial-text">"{testimonial.text}"</p>
+            <footer class="testimonial-footer">
+              <cite class="testimonial-name">{testimonial.name}</cite>
+              <span class="testimonial-location">{testimonial.location}</span>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-content flow">
+          <h2 class="section-title">{content.contact.heading}</h2>
+          <p class="section-subtitle">{content.contact.subheading}</p>
+          
+          <form 
+            class="contact-form flow"
+            action={content.contact.formAction}
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="New Tour Inquiry" />
+            <input type="hidden" name="_captcha" value="false" />
+            
+            <div class="form-group">
+              <label for="name" class="form-label">Your Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-input" 
+                required 
+              />
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  class="form-input" 
+                  required 
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="phone" class="form-label">Phone (Optional)</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  class="form-input" 
+                />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="travel-dates" class="form-label">Preferred Travel Dates</label>
+              <input 
+                type="text" 
+                id="travel-dates" 
+                name="travel_dates" 
+                class="form-input" 
+                placeholder="e.g., June 2025"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="message" class="form-label">Tell Us About Your Dream Trip</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                class="form-textarea" 
+                rows="5"
+                placeholder="What would make your Irish journey special?"
+              ></textarea>
+            </div>
+            
+            <button type="submit" class="button button--large">
+              Request Your Callback
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; {new Date().getFullYear()} Guided Tours To Ireland. All rights reserved.</p>
+    </div>
+  </footer>
+</IrelandLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: clamp(32rem, 90vh, 50rem);
+    display: grid;
+    place-items: center;
+    padding: var(--space-xl-2xl) var(--space-m);
+    text-align: center;
+    color: white;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%),
+      var(--hero-image);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+  
+  .hero-title {
+    font-size: clamp(2rem, 5vw + 1rem, 4rem);
+    line-height: 1.1;
+    margin-bottom: var(--space-s);
+  }
+  
+  .hero-description {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-l);
+    max-width: 60ch;
+    margin-inline: auto;
+  }
+  
+  /* Sections */
+  .section {
+    padding-block: var(--space-xl-2xl);
+  }
+  
+  .section--alt {
+    background: #f9fafb;
+  }
+  
+  .section-header {
+    margin-bottom: var(--space-xl);
+  }
+  
+  .section-title {
+    margin-bottom: var(--space-s);
+  }
+  
+  .section-subtitle {
+    font-size: var(--step-1);
+    color: var(--color-text-light);
+  }
+  
+  /* Feature Cards */
+  .feature-icon {
+    color: var(--color-primary);
+    margin-bottom: var(--space-m);
+  }
+  
+  .feature-title {
+    margin-bottom: var(--space-s);
+  }
+  
+  /* Tour Cards */
+  .tour-card {
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  @media (hover: hover) {
+    .tour-card:hover {
+      transform: translateY(-0.25rem);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .tour-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  
+  .tour-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  @media (hover: hover) {
+    .tour-card:hover .tour-image img {
+      transform: scale(1.05);
+    }
+  }
+  
+  .tour-content {
+    padding: var(--space-m-l);
+  }
+  
+  /* Testimonials */
+  .testimonial-card {
+    background: white;
+    padding: var(--space-m-l);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-stars {
+    color: #f59e0b;
+    font-size: var(--step-1);
+    margin-bottom: var(--space-s);
+  }
+  
+  .testimonial-text {
+    font-size: var(--step-0);
+    line-height: 1.7;
+    margin-bottom: var(--space-m);
+  }
+  
+  .testimonial-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+  
+  .testimonial-name {
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .testimonial-location {
+    color: var(--color-text-light);
+    font-size: var(--step--1);
+  }
+  
+  /* Contact */
+  .contact-wrapper {
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+  
+  .form-row {
+    display: grid;
+    gap: var(--space-m);
+  }
+  
+  @media (min-width: 640px) {
+    .form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Buttons */
+  .button {
+    display: inline-block;
+    padding: var(--space-s) var(--space-m-l);
+    background: var(--color-primary);
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: var(--step-0);
+  }
+  
+  .button:hover {
+    background: var(--color-text);
+    transform: translateY(-1px);
+  }
+  
+  .button--large {
+    padding: var(--space-s-m) var(--space-l-xl);
+    font-size: var(--step-1);
+  }
+  
+  .button--secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  
+  .button--secondary:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+  
+  /* Footer */
+  .footer {
+    background: var(--color-text);
+    color: white;
+    padding: var(--space-l) var(--space-m);
+    text-align: center;
+  }
+</style>

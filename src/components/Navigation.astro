@@ -1,0 +1,214 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Manifesto', href: '/#manifesto' },
+  { label: 'Contact', href: '/contact' }
+];
+---
+
+<nav class="nav-container">
+  <div class="nav-content">
+    <a href="/" class="logo">
+      <span class="logo-text">CODIO</span>
+      <span class="logo-vortex"></span>
+    </a>
+    
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <ul class="nav-links">
+      {navItems.map((item) => (
+        <li>
+          <a 
+            href={item.href} 
+            class={`nav-link ${currentPath === item.href ? 'active' : ''}`}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 800;
+    font-size: 1.5rem;
+    position: relative;
+  }
+  
+  .logo-vortex {
+    width: 30px;
+    height: 30px;
+    border: 2px solid transparent;
+    border-top-color: var(--codio-purple);
+    border-right-color: var(--codio-blue);
+    border-radius: 50%;
+    animation: vortex-rotate 3s linear infinite;
+  }
+  
+  .logo:hover .logo-vortex {
+    animation-duration: 1s;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+  
+  .nav-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--codio-purple), var(--codio-blue));
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover,
+  .nav-link.active {
+    color: white;
+  }
+  
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+  
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      display: flex;
+    }
+    
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-container.menu-open .nav-links {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .nav-container.menu-open .mobile-menu-toggle span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-container.menu-open .mobile-menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .nav-container.menu-open .mobile-menu-toggle span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const nav = document.querySelector('.nav-container');
+  
+  toggle?.addEventListener('click', () => {
+    nav?.classList.toggle('menu-open');
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!nav?.contains(e.target as Node)) {
+      nav?.classList.remove('menu-open');
+    }
+  });
+  
+  // Scroll effect
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      nav?.classList.add('scrolled');
+    } else {
+      nav?.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  });
+</script>

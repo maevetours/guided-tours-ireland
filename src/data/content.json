@@ -1,0 +1,122 @@
+{
+  "site": {
+    "title": "Guided Tours To Ireland",
+    "description": "Private, meaningful Irish journeys led by expert chauffeurs. We don't just guide tours - we bring you home to Ireland.",
+    "keywords": "Ireland tours, private tours, Irish chauffeur, luxury tours Ireland"
+  },
+  "colors": {
+    "primary": "#326B4A",
+    "secondary": "#EBF4EF",
+    "accent": "#D4A574",
+    "text": "#343A46",
+    "textLight": "#697586"
+  },
+  "hero": {
+    "title": "We Don't Just Guide Tours.",
+    "subtitle": "We Bring You Home.",
+    "description": "Private, meaningful Irish journeys led by expert chauffeurs.",
+    "ctaText": "Request a Callback",
+    "ctaLink": "#contact",
+    "backgroundImage": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-cliffs",
+    "cdnBackgroundImage": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-cliffs"
+  },
+  "features": [
+    {
+      "icon": "shield",
+      "title": "Expert Local Knowledge",
+      "description": "Your chauffeur isn't just a driver\u2014they're your personal guide with deep knowledge of Irish history, culture, and hidden gems."
+    },
+    {
+      "icon": "customize",
+      "title": "Completely Personalized",
+      "description": "Every journey is crafted around your interests, pace, and family heritage. No rigid schedules or crowded buses."
+    },
+    {
+      "icon": "comfort",
+      "title": "Stress-Free Comfort",
+      "description": "Luxury vehicles, door-to-door service, and all logistics handled. Simply relax and connect with the Ireland of your dreams."
+    }
+  ],
+  "tours": [
+    {
+      "id": "ancestral",
+      "title": "Slieve League Cliffs",
+      "shortDescription": "Experience Ireland's highest sea cliffs in comfort",
+      "image": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-coastal-cliffs",
+      "featured": true
+    },
+    {
+      "id": "atlantic",
+      "title": "Cliffs of Moher",
+      "shortDescription": "Iconic views along the Wild Atlantic Way",
+      "image": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/cliffs-of-moher",
+      "featured": true
+    },
+    {
+      "id": "literary",
+      "title": "Midleton Distillery",
+      "shortDescription": "Discover Ireland's whiskey heritage",
+      "image": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/midleton-distillery",
+      "featured": true
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Sarah M.",
+      "location": "Boston, USA",
+      "text": "Our chauffeur made us feel like we were visiting family, not touring as strangers. Every stop had meaning.",
+      "rating": 5
+    },
+    {
+      "name": "James & Patricia",
+      "location": "Toronto, Canada",
+      "text": "The perfect balance of planning and spontaneity. When we wanted to linger at a castle, we could. When we discovered a perfect pub, we stopped.",
+      "rating": 5
+    },
+    {
+      "name": "The Thompson Family",
+      "location": "Sydney, Australia",
+      "text": "Three generations traveling together, and everyone was happy. That's the magic of a truly personalized tour.",
+      "rating": 5
+    }
+  ],
+  "contact": {
+    "phone": "+353 86 837 7355",
+    "email": "maeve.tours@gmail.com",
+    "formAction": "https://formsubmit.co/maeve.tours@gmail.com",
+    "heading": "Start Your Irish Journey",
+    "subheading": "Let us craft your perfect Irish experience"
+  },
+  "images": {
+    "cdn": "https://res.cloudinary.com/dhpnoabqq/image/upload/v1/ireland-tours/",
+    "localPath": "/images/"
+  },
+  "cdnUrls": {
+    "luxury-car.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/luxury-car",
+    "maeve-12.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-12",
+    "maeve-10.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-10",
+    "blarney-castle.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/blarney-castle",
+    "maeve-18.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-18",
+    "maeve-9.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-9",
+    "maeve-6.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-6",
+    "maeve-15.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-15",
+    "dunbrody-ship.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/dunbrody-ship",
+    "maeve-11.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-11",
+    "maeve-4.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-4",
+    "maeve-7.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-7",
+    "maeve-16.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-16",
+    "maeve-13.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-13",
+    "maeve-5.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-5",
+    "maeve-3.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-3",
+    "cliffs-of-moher.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/cliffs-of-moher",
+    "maeve-17.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-17",
+    "maeve-8.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-8",
+    "maeve-1.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-1",
+    "midleton-distillery.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/midleton-distillery",
+    "irish-coastal-cliffs.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-coastal-cliffs",
+    "maeve-2.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-2",
+    "hook-lighthouse.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/hook-lighthouse",
+    "irish-cliffs.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-cliffs",
+    "maeve-14.jpg": "https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/maeve-14"
+  }
+}

@@ -1,0 +1,171 @@
+---
+// Animated vortex background component
+---
+
+<div class="vortex-container">
+  <div class="vortex-element"></div>
+  <div class="vortex-element"></div>
+  <div class="vortex-element"></div>
+  
+  <!-- Particle field -->
+  <div class="particle-field">
+    {Array.from({ length: 50 }).map((_, i) => (
+      <div class="particle" style={`--delay: ${i * 0.1}s; --duration: ${10 + Math.random() * 20}s`}></div>
+    ))}
+  </div>
+  
+  <!-- Energy lines -->
+  <svg class="energy-lines" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:0" />
+        <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:0.5" />
+        <stop offset="100%" style="stop-color:#EC4899;stop-opacity:0" />
+      </linearGradient>
+    </defs>
+    
+    <path class="energy-path" d="M0,540 Q480,400 960,540 T1920,540" />
+    <path class="energy-path" d="M0,300 Q480,450 960,300 T1920,300" />
+    <path class="energy-path" d="M0,780 Q480,630 960,780 T1920,780" />
+  </svg>
+</div>
+
+<style>
+  .particle-field {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(139, 92, 246, 0.6);
+    border-radius: 50%;
+    animation: 
+      particle-float var(--duration) ease-in-out infinite var(--delay),
+      particle-glow 2s ease-in-out infinite var(--delay);
+  }
+  
+  @keyframes particle-float {
+    0%, 100% {
+      transform: translate(0, 0) scale(0);
+      opacity: 0;
+    }
+    10% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    90% {
+      transform: translate(calc(100vw * var(--tx, 1)), calc(-100vh * var(--ty, 1))) scale(0.5);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-glow {
+    0%, 100% {
+      box-shadow: 0 0 3px rgba(139, 92, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 10px rgba(59, 130, 246, 1);
+    }
+  }
+  
+  /* Position particles randomly */
+  .particle:nth-child(1) { left: 10%; top: 80%; --tx: 0.8; --ty: 0.9; }
+  .particle:nth-child(2) { left: 20%; top: 70%; --tx: 0.6; --ty: 0.8; }
+  .particle:nth-child(3) { left: 30%; top: 60%; --tx: 0.4; --ty: 0.7; }
+  .particle:nth-child(4) { left: 40%; top: 90%; --tx: 0.2; --ty: 1; }
+  .particle:nth-child(5) { left: 50%; top: 85%; --tx: 0; --ty: 0.9; }
+  .particle:nth-child(6) { left: 60%; top: 75%; --tx: -0.2; --ty: 0.8; }
+  .particle:nth-child(7) { left: 70%; top: 65%; --tx: -0.4; --ty: 0.7; }
+  .particle:nth-child(8) { left: 80%; top: 95%; --tx: -0.6; --ty: 1; }
+  .particle:nth-child(9) { left: 90%; top: 80%; --tx: -0.8; --ty: 0.9; }
+  .particle:nth-child(10) { left: 5%; top: 90%; --tx: 0.9; --ty: 1; }
+  
+  /* More particles with variations */
+  .particle:nth-child(n+11) {
+    width: 1px;
+    height: 1px;
+    background: rgba(236, 72, 153, 0.4);
+  }
+  
+  .particle:nth-child(n+21) {
+    width: 3px;
+    height: 3px;
+    background: rgba(59, 130, 246, 0.5);
+  }
+  
+  .particle:nth-child(n+31) {
+    animation-duration: calc(var(--duration) * 1.5);
+  }
+  
+  .particle:nth-child(n+41) {
+    animation-duration: calc(var(--duration) * 0.7);
+  }
+  
+  /* Energy lines */
+  .energy-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+  
+  .energy-path {
+    fill: none;
+    stroke: url(#line-gradient);
+    stroke-width: 2;
+    stroke-linecap: round;
+    animation: energy-flow 10s ease-in-out infinite;
+  }
+  
+  .energy-path:nth-child(2) {
+    animation-delay: -3.33s;
+  }
+  
+  .energy-path:nth-child(3) {
+    animation-delay: -6.66s;
+  }
+  
+  @keyframes energy-flow {
+    0%, 100% {
+      stroke-dasharray: 0 1000;
+      opacity: 0;
+    }
+    50% {
+      stroke-dasharray: 1000 0;
+      opacity: 0.5;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .particle {
+      animation-duration: calc(var(--duration) * 0.8);
+    }
+    
+    .energy-lines {
+      opacity: 0.2;
+    }
+  }
+</style>
+
+<script>
+  // Add dynamic particle positions
+  document.addEventListener('DOMContentLoaded', () => {
+    const particles = document.querySelectorAll('.particle');
+    
+    particles.forEach((particle, index) => {
+      if (index >= 10) {
+        const element = particle as HTMLElement;
+        element.style.left = `${Math.random() * 100}%`;
+        element.style.top = `${Math.random() * 100}%`;
+        element.style.setProperty('--tx', `${(Math.random() - 0.5) * 2}`);
+        element.style.setProperty('--ty', `${Math.random()}`);
+      }
+    });
+  });
+</script>

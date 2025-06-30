@@ -1,0 +1,88 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Build outputs
+dist/
+.astro/
+*.log
+
+# Environment and credentials
+.env
+.env.local
+.env.production
+.env.*.local
+backups/credentials/CREDENTIALS.txt
+backups/credentials/*.txt
+!backups/credentials/CREDENTIALS.template.txt
+
+# Scripts with potential secrets
+*.sh
+push_to_github.sh
+
+# Python scripts
+*.py
+venv/
+__pycache__/
+
+# Images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+server.log
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+.tmp/
+.cache/
+tmp/
+temp/
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Local development
+.local/
+local/
+
+# Python (if any scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Security
+*.pem
+*.key
+*.crt
+*.pfx
+private/

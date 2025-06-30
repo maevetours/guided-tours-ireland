@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="vortex-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Vortex spiral -->
+  <g transform="translate(50,50)">
+    <!-- Outer spiral -->
+    <path d="M0,-40 Q40,-40 40,0 Q40,40 0,40 Q-40,40 -40,0 Q-40,-40 0,-40" 
+          fill="none" 
+          stroke="url(#vortex-gradient)" 
+          stroke-width="3"
+          opacity="0.8"/>
+    
+    <!-- Middle spiral -->
+    <path d="M0,-25 Q25,-25 25,0 Q25,25 0,25 Q-25,25 -25,0 Q-25,-25 0,-25" 
+          fill="none" 
+          stroke="url(#vortex-gradient)" 
+          stroke-width="3"
+          opacity="0.9"/>
+    
+    <!-- Inner spiral -->
+    <path d="M0,-10 Q10,-10 10,0 Q10,10 0,10 Q-10,10 -10,0 Q-10,-10 0,-10" 
+          fill="url(#vortex-gradient)" 
+          opacity="1"/>
+    
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="3" fill="#fff"/>
+  </g>
+</svg>

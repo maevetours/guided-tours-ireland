@@ -1,0 +1,399 @@
+/* 
+  Ireland Tours - Responsive CSS
+  Mobile-first approach with fluid units
+  Kevin Powell would be proud! 
+*/
+
+/* CSS Custom Properties with Fluid Sizing */
+:root {
+  /* Fluid Typography Scale */
+  --fluid-min-width: 320;
+  --fluid-max-width: 1200;
+  --fluid-min-size: 16;
+  --fluid-max-size: 19;
+  --fluid-min-ratio: 1.2;
+  --fluid-max-ratio: 1.25;
+  
+  /* Fluid Space Scale */
+  --space-3xs: clamp(0.25rem, 0.23rem + 0.09vw, 0.31rem);
+  --space-2xs: clamp(0.5rem, 0.48rem + 0.09vw, 0.56rem);
+  --space-xs: clamp(0.75rem, 0.71rem + 0.18vw, 0.88rem);
+  --space-s: clamp(1rem, 0.95rem + 0.27vw, 1.19rem);
+  --space-m: clamp(1.5rem, 1.43rem + 0.36vw, 1.75rem);
+  --space-l: clamp(2rem, 1.91rem + 0.45vw, 2.31rem);
+  --space-xl: clamp(3rem, 2.86rem + 0.71vw, 3.5rem);
+  --space-2xl: clamp(4rem, 3.82rem + 0.89vw, 4.63rem);
+  --space-3xl: clamp(6rem, 5.73rem + 1.34vw, 6.94rem);
+  
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, 0.14rem + 0.54vw, 0.63rem);
+  --space-2xs-xs: clamp(0.5rem, 0.39rem + 0.54vw, 0.88rem);
+  --space-xs-s: clamp(0.75rem, 0.63rem + 0.63vw, 1.19rem);
+  --space-s-m: clamp(1rem, 0.77rem + 1.16vw, 1.81rem);
+  --space-m-l: clamp(1.5rem, 1.25rem + 1.25vw, 2.38rem);
+  --space-l-xl: clamp(2rem, 1.55rem + 2.23vw, 3.56rem);
+  --space-xl-2xl: clamp(3rem, 2.5rem + 2.5vw, 4.75rem);
+  
+  /* Fluid Type Scale */
+  --step--2: clamp(0.69rem, 0.66rem + 0.18vw, 0.83rem);
+  --step--1: clamp(0.83rem, 0.78rem + 0.29vw, 1.04rem);
+  --step-0: clamp(1rem, 0.93rem + 0.36vw, 1.25rem);
+  --step-1: clamp(1.2rem, 1.09rem + 0.54vw, 1.56rem);
+  --step-2: clamp(1.44rem, 1.28rem + 0.8vw, 1.95rem);
+  --step-3: clamp(1.73rem, 1.5rem + 1.16vw, 2.44rem);
+  --step-4: clamp(2.07rem, 1.75rem + 1.61vw, 3.05rem);
+  --step-5: clamp(2.49rem, 2.03rem + 2.32vw, 3.82rem);
+  
+  /* Container & Content Width */
+  --container-max: 75rem; /* 1200px */
+  --content-max: 65ch;
+  --content-narrow: 45ch;
+  
+  /* Breakpoints for JS */
+  --bp-mobile: 640;
+  --bp-tablet: 768;
+  --bp-desktop: 1024;
+  --bp-wide: 1280;
+}
+
+/* Fluid Font Size */
+html {
+  font-size: clamp(
+    1rem,
+    0.93rem + 0.36vw,
+    1.25rem
+  );
+}
+
+/* Layout Primitives */
+.container {
+  width: min(100% - var(--space-m-l), var(--container-max));
+  margin-inline: auto;
+}
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, var(--space-m));
+}
+
+/* Responsive Grid System */
+.grid {
+  display: grid;
+  gap: var(--grid-gap, var(--space-m-l));
+}
+
+@media (min-width: 640px) {
+  .grid[data-layout="50-50"] {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .grid[data-layout="sidebar"] {
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid[data-layout="cards"] {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); }
+
+p {
+  max-width: var(--content-max);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Hero Section - Responsive */
+.hero {
+  position: relative;
+  min-height: min(100vh, 50rem);
+  min-height: 100svh; /* Mobile safe */
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-xl-2xl);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+    var(--hero-image, url('https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_800,q_auto:good,w_1200/v1/ireland-tours/ireland-tours/irish-cliffs'));
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.hero-content {
+  text-align: center;
+  color: white;
+  padding-inline: var(--space-m);
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw + 1rem, 4.5rem);
+  margin-block-end: var(--space-s);
+}
+
+/* Navigation - Mobile First */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-s-m);
+}
+
+.nav-list {
+  display: none;
+  list-style: none;
+  gap: var(--space-m-l);
+}
+
+@media (min-width: 768px) {
+  .nav-list {
+    display: flex;
+  }
+  
+  .nav-toggle {
+    display: none;
+  }
+}
+
+/* Mobile Menu */
+.nav-toggle {
+  background: none;
+  border: none;
+  padding: var(--space-xs);
+  cursor: pointer;
+}
+
+.nav-toggle[aria-expanded="true"] ~ .nav-list {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  background: white;
+  padding: var(--space-m);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards - Better Mobile Animation */
+.feature-card {
+  --card-padding: var(--space-m-l);
+  position: relative;
+  background: white;
+  padding: var(--card-padding);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Only animate on hover for desktop */
+@media (hover: hover) and (min-width: 1024px) {
+  .feature-card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Touch-friendly tap effect for mobile */
+@media (hover: none) {
+  .feature-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Image Carousel - Complete Rewrite */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-out;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Carousel Controls */
+.carousel-controls {
+  position: absolute;
+  bottom: var(--space-m);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+  width: 1.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Touch-friendly carousel buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-nav:hover {
+  background: white;
+}
+
+.carousel-nav.prev { left: var(--space-m); }
+.carousel-nav.next { right: var(--space-m); }
+
+@media (max-width: 768px) {
+  .carousel-nav {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .carousel-nav.prev { left: var(--space-s); }
+  .carousel-nav.next { right: var(--space-s); }
+}
+
+/* Forms - Mobile Optimized */
+.form-group {
+  margin-block-end: var(--space-m);
+}
+
+.form-label {
+  display: block;
+  margin-block-end: var(--space-xs);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: var(--space-s);
+  border: 1px solid var(--color-border, #e5e7ea);
+  border-radius: 0.375rem;
+  font-size: var(--step-0);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(50, 107, 74, 0.1);
+}
+
+/* Touch-friendly form inputs */
+@media (hover: none) {
+  .form-input,
+  .form-textarea {
+    font-size: max(1rem, var(--step-0)); /* Prevent zoom on iOS */
+  }
+}
+
+/* Utility Classes */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-center { text-align: center; }
+.text-balance { text-wrap: balance; }
+
+/* Responsive Utilities */
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hide-tablet-up { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* Print Styles */
+@media print {
+  .no-print,
+  .nav,
+  .carousel-controls,
+  .call-button {
+    display: none !important;
+  }
+}

@@ -1,0 +1,80 @@
+---
+export interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+const { data, slug } = post;
+
+// Format date
+const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<article class="blog-card">
+  <time class="text-sm text-gray-500 mb-2 block">{formattedDate}</time>
+  
+  <h3 class="text-xl font-bold mb-3 hover:text-codio-purple transition-colors">
+    <a href={`/blog/${slug}`}>
+      {data.title}
+    </a>
+  </h3>
+  
+  <p class="text-gray-400 mb-4 line-clamp-3">
+    {data.description}
+  </p>
+  
+  <div class="flex items-center justify-between">
+    <div class="flex gap-2">
+      {data.tags?.slice(0, 2).map((tag: string) => (
+        <span class="tag">#{tag}</span>
+      ))}
+    </div>
+    
+    <a 
+      href={`/blog/${slug}`} 
+      class="text-codio-blue hover:text-codio-purple transition-colors text-sm font-medium flex items-center gap-1"
+    >
+      Read more
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .blog-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .blog-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    color: #A78BFA;
+    opacity: 0.8;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+  }
+</style>

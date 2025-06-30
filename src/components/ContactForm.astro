@@ -1,0 +1,187 @@
+---
+import content from '../data/content.json';
+---
+
+<form 
+  id="contact-form"
+  class="contact-form flow"
+  data-form
+>
+  <input type="hidden" name="_subject" value="New Tour Inquiry" />
+  
+  <div class="form-group">
+    <label for="name" class="form-label">Your Name</label>
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      class="form-input" 
+      required 
+    />
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        class="form-input" 
+        required 
+      />
+    </div>
+    
+    <div class="form-group">
+      <label for="phone" class="form-label">Phone (Optional)</label>
+      <input 
+        type="tel" 
+        id="phone" 
+        name="phone" 
+        class="form-input" 
+      />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="travel-dates" class="form-label">Preferred Travel Dates</label>
+    <input 
+      type="text" 
+      id="travel-dates" 
+      name="travel_dates" 
+      class="form-input" 
+      placeholder="e.g., June 2025"
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="message" class="form-label">Tell Us About Your Dream Trip</label>
+    <textarea 
+      id="message" 
+      name="message" 
+      class="form-textarea" 
+      rows="5"
+      placeholder="What would make your Irish journey special?"
+    ></textarea>
+  </div>
+  
+  <button type="submit" class="button button--large" data-submit>
+    Request Your Callback
+  </button>
+  
+  <div class="form-status" data-status aria-live="polite"></div>
+</form>
+
+<style>
+  .form-status {
+    margin-top: var(--space-m);
+    padding: var(--space-s-m);
+    border-radius: 0.375rem;
+    text-align: center;
+    display: none;
+  }
+  
+  .form-status.success {
+    display: block;
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  
+  .form-status.error {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+  
+  .form-status.loading {
+    display: block;
+    background: #e0e7ff;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
+  }
+  
+  button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  // Form submission handler
+  const form = document.querySelector('[data-form]') as HTMLFormElement;
+  const submitBtn = document.querySelector('[data-submit]') as HTMLButtonElement;
+  const statusDiv = document.querySelector('[data-status]') as HTMLDivElement;
+  
+  // Form submission configuration
+  const FORM_CONFIG = {
+    // FormSubmit.co - free and reliable
+    endpoint: 'https://formsubmit.co/ajax/maeve.tours@gmail.com',
+    // No API key needed for FormSubmit.co
+  };
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusDiv.className = 'form-status loading';
+    statusDiv.textContent = 'Processing your request...';
+    
+    try {
+      // FormSubmit.co submission
+      const response = await fetch(FORM_CONFIG.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: 'New Ireland Tour Inquiry - ' + data.name,
+          _captcha: 'false', // Disable captcha for AJAX
+          _template: 'table', // Nice email format
+          _cc: 'maevetours.dev@gmail.com' // CC to dev email
+        })
+      });
+      
+      if (response?.ok) {
+        // Success
+        form.reset();
+        statusDiv.className = 'form-status success';
+        statusDiv.textContent = 'Thank you! We\'ll call you back within 24 hours.';
+        submitBtn.textContent = 'Message Sent!';
+        
+        // Track in GA4
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'form_submit', {
+            event_category: 'engagement',
+            event_label: 'contact_form'
+          });
+        }
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Request Your Callback';
+        }, 3000);
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      // Error
+      statusDiv.className = 'form-status error';
+      statusDiv.textContent = 'Sorry, something went wrong. Please try again or call us directly.';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request Your Callback';
+      
+      console.error('Form submission error:', error);
+    }
+  });
+</script>

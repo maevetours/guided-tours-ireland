@@ -1,0 +1,89 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import VortexBackground from '../components/VortexBackground.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { 
+  title, 
+  description = "IAmCodio - Infinite Value Creation Through Vortex Mastery",
+  image = "/og-image.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="IAmCodio" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | IAmCodio`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IAmCodio" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@iamcodio" />
+    <meta name="twitter:title" content={`${title} | IAmCodio`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Title -->
+    <title>{title} | IAmCodio</title>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <VortexBackground />
+    <Navigation />
+    
+    <main>
+      <slot />
+    </main>
+    
+    <Footer />
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #111827;
+    color: white;
+    overflow-x: hidden;
+  }
+  
+  main {
+    padding-top: 4rem; /* Account for fixed navigation */
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 4rem);
+  }
+</style>
