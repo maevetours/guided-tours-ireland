@@ -1,0 +1,616 @@
+---
+import IrelandLayout from '../layouts/IrelandLayout.astro';
+import '../styles/ireland-original.css';
+
+// Complete tour data with detailed descriptions for modals
+const tours = [
+  {
+    id: 'ancestral',
+    title: 'Slieve League Cliffs',
+    shortDesc: 'Perched on the rugged coastline of County Donegal, the Slieve League Cliffs stand as a testament to Ireland\'s natural grandeur.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/irish-coastal-cliffs',
+    fullDesc: 'At nearly three times higher than the Cliffs of Moher, Slieve League offers breathtaking views of the Atlantic Ocean. Your private journey includes stops at ancient stone circles, traditional villages, and the famous thatched cottages of Glencolmcille.',
+    highlights: ['600-meter sea cliffs', 'Ancient pilgrim paths', 'Traditional Irish villages', 'Stone Age monuments'],
+    duration: 'Full day (8-10 hours)',
+    included: ['Private vehicle', 'Expert guide', 'Refreshments', 'Flexible itinerary']
+  },
+  {
+    id: 'atlantic', 
+    title: 'Cliffs of Moher',
+    shortDesc: 'Experience County Clare\'s iconic coastal treasure, Ireland\'s most visited natural attraction with stunning Atlantic views.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/cliffs-of-moher',
+    fullDesc: 'Rising 214 meters above the Atlantic Ocean, the Cliffs of Moher stretch for 8 kilometers along Ireland\'s west coast. Visit O\'Brien\'s Tower, explore the interactive visitor center, and spot puffins and dolphins in their natural habitat.',
+    highlights: ['O\'Brien\'s Tower', 'Coastal wildlife', 'Visitor center', 'Doolin village'],
+    duration: 'Full day (8-10 hours)',
+    included: ['Luxury transport', 'Admission fees', 'Local insights', 'Photo stops']
+  },
+  {
+    id: 'literary',
+    title: 'Midleton Distillery', 
+    shortDesc: 'Discover Ireland\'s celebrated whiskey tradition in County Cork, home to Jameson and Ireland\'s finest whiskey heritage.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/midleton-distillery',
+    fullDesc: 'Home to Jameson Irish Whiskey, Midleton Distillery offers an immersive journey through 200 years of whiskey-making tradition. Enjoy exclusive tastings, master distiller experiences, and learn the art of whiskey blending.',
+    highlights: ['Behind-the-scenes tour', 'Premium tastings', 'Blending experience', 'Historic buildings'],
+    duration: 'Half day (4-5 hours)',
+    included: ['VIP tour access', 'Premium tastings', 'Souvenir glass', 'Transport']
+  },
+  {
+    id: 'hidden',
+    title: 'Irish Emigration Heritage',
+    shortDesc: 'Experience Ireland\'s poignant emigration story aboard the authentic Dunbrody Famine Ship in New Ross, County Wexford.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/dunbrody-ship',
+    fullDesc: 'Step aboard the Dunbrody, an authentic reproduction of a 19th-century famine ship. Experience the conditions faced by Irish emigrants, explore interactive exhibits, and trace your Irish ancestry with expert genealogists.',
+    highlights: ['Authentic ship tour', 'Genealogy assistance', 'Interactive exhibits', 'Kennedy Homestead'],
+    duration: 'Half day (4-5 hours)',
+    included: ['Ship admission', 'Genealogy help', 'Historical insights', 'Comfort transport']
+  },
+  {
+    id: 'kerry',
+    title: 'Hook Lighthouse',
+    shortDesc: 'Experience 800 years of maritime history at one of the world\'s oldest working lighthouses on County Wexford\'s scenic coast.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/hook-lighthouse',
+    fullDesc: 'Dating from the 13th century, Hook Lighthouse is one of the oldest operational lighthouses in the world. Climb the 115 steps for panoramic ocean views, explore medieval architecture, and discover centuries of maritime history.',
+    highlights: ['Medieval architecture', 'Panoramic views', 'Guided tower tour', 'Coastal walks'],
+    duration: 'Half day (3-4 hours)',
+    included: ['Tower access', 'Guided tour', 'Coastal drive', 'Refreshments']
+  },
+  {
+    id: 'castles',
+    title: 'Blarney Castle',
+    shortDesc: 'Experience Ireland\'s most enchanting castle in County Cork, home to the legendary Blarney Stone and magnificent gardens.',
+    image: 'https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_320,q_auto:good,w_400/v1/ireland-tours/ireland-tours/blarney-castle',
+    fullDesc: 'Kiss the famous Blarney Stone and receive the gift of eloquence! Explore the medieval castle, wander through mystical gardens including the Poison Garden, and discover hidden caves and ancient druid sites.',
+    highlights: ['Blarney Stone', 'Castle exploration', 'Poison Garden', 'Rock Close'],
+    duration: 'Half day (4-5 hours)',
+    included: ['Castle admission', 'Garden access', 'Historical commentary', 'Luxury transport']
+  }
+];
+
+const testimonials = [
+  { text: '"Our chauffeur felt like family by the end. The care and attention to detail was extraordinary."', author: 'Margaret, Boston', avatar: 'M' },
+  { text: '"I found my great-grandmother\'s village. The emotional support throughout was incredible."', author: 'Susan, Toronto', avatar: 'S' },
+  { text: '"Every day was perfectly paced. No rushing, no stress—just pure connection to the land."', author: 'Dorothy, Melbourne', avatar: 'D' },
+  { text: '"The local insights made all the difference. We experienced Ireland as insiders, not tourists."', author: 'Ruth, San Francisco', avatar: 'R' },
+  { text: '"Luxury without pretense. Genuine warmth and expertise throughout our entire journey."', author: 'Joan, London', avatar: 'J' },
+  { text: '"They understood exactly what we needed—comfort, knowledge, and authentic Irish hospitality."', author: 'Catherine, New York', avatar: 'C' }
+];
+
+const maeveImages = [
+  'maeve-18', 'maeve-6', 'maeve-7', 'maeve-8', 'maeve-9', 
+  'maeve-10', 'maeve-11', 'maeve-12', 'maeve-13', 'maeve-14',
+  'maeve-15', 'maeve-16', 'maeve-17', 'maeve-5'
+];
+---
+
+<IrelandLayout>
+  <style>
+    /* Fix icon alignment */
+    .feature-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+    }
+    
+    /* Tour modals */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      overflow-y: auto;
+    }
+    
+    .modal.active {
+      display: block;
+    }
+    
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      width: 90%;
+      max-width: 800px;
+      border-radius: var(--border-radius);
+      position: relative;
+    }
+    
+    .modal-close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: hsl(var(--text-secondary));
+    }
+    
+    .modal-close:hover {
+      color: hsl(var(--text-primary));
+    }
+    
+    .modal h3 {
+      color: hsl(var(--accent-primary));
+      margin-bottom: 1rem;
+    }
+    
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .modal-section h4 {
+      color: hsl(var(--text-primary));
+      margin-bottom: 0.5rem;
+    }
+    
+    .modal-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .modal-list li {
+      padding: 0.5rem 0;
+      color: hsl(var(--text-secondary));
+    }
+    
+    .modal-list li:before {
+      content: "✓ ";
+      color: hsl(var(--accent-primary));
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="/" class="logo">
+          <img src="https://res.cloudinary.com/dhpnoabqq/image/upload/v1751256238/ireland-tours/logo.png" alt="Guided Tours To Ireland Logo" class="logo-img">
+          <span class="logo-text">Guided Tours To Ireland</span>
+        </a>
+        <nav class="nav">
+          <button class="nav-toggle" aria-label="Toggle navigation menu" id="navToggle">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <ul class="nav-list" id="navList">
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#features" class="nav-link">Services</a></li>
+            <li><a href="#tours" class="nav-link">Tours</a></li>
+            <li><a href="#guides" class="nav-link">Chauffeurs</a></li>
+            <li><a href="#testimonials" class="nav-link">Stories</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero" style={`background-image: url('https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_auto,h_1080,q_auto:good,w_1920/v1/ireland-tours/ireland-tours/irish-cliffs')`}>
+    <div class="hero-content">
+      <div class="container">
+        <div class="hero-text">
+          <h1 class="hero-title">We Don't Just Guide Tours.<br>We Bring You Home.</h1>
+          <p class="hero-subtitle">Private, meaningful Irish journeys led by expert chauffeurs.</p>
+          <a href="#contact" class="cta-button">Request a Callback</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why Choose Our Private Tours</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path d="M24 4L6 14v20c0 11.05 7.7 21.35 18 24 10.3-2.65 18-12.95 18-24V14L24 4z" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M18 24l6 6 12-12" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Expert Local Knowledge</h3>
+          <p class="feature-description">Your chauffeur isn't just a driver—they're your personal guide with deep knowledge of Irish history, culture, and hidden gems.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Completely Personalized</h3>
+          <p class="feature-description">Every journey is crafted around your interests, pace, and family heritage. No rigid schedules or crowded buses.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path d="M20 6a14 14 0 1 0 14 14c0-9.33-8-24-14-24z" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M24 20a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Stress-Free Comfort</h3>
+          <p class="feature-description">Luxury vehicles, door-to-door service, and all logistics handled. Simply relax and connect with the Ireland of your dreams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Tours Section -->
+  <section class="tours" id="tours">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Popular Journeys</h2>
+      </div>
+      <div class="tours-grid">
+        {tours.map((tour) => (
+          <div class="tour-card-container" data-tour={tour.id}>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h3 class="tour-title">{tour.title}</h3>
+                <p class="tour-description">{tour.shortDesc}</p>
+              </div>
+              <div class="flip-card-back">
+                <div class="tour-image" style={`background-image: url('${tour.image}')`}></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tour Modals -->
+  {tours.map((tour) => (
+    <div id={`modal-${tour.id}`} class="modal">
+      <div class="modal-content">
+        <span class="modal-close" data-close={tour.id}>&times;</span>
+        <h3>{tour.title}</h3>
+        <p>{tour.fullDesc}</p>
+        <div class="modal-grid">
+          <div class="modal-section">
+            <h4>Tour Highlights</h4>
+            <ul class="modal-list">
+              {tour.highlights.map(highlight => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h4>Tour Details</h4>
+            <p><strong>Duration:</strong> {tour.duration}</p>
+            <h4 style="margin-top: 1rem;">What's Included</h4>
+            <ul class="modal-list">
+              {tour.included.map(item => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  <!-- Chauffeur Guides Section -->
+  <section class="guides" id="guides">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Meet Our Professional Chauffeur Guides</h2>
+        <p class="section-description">Our expert driver-guides are fully qualified, licensed chauffeurs with extensive tour guide experience. Each holds professional limousine licenses and specialized tourism certifications for your complete peace of mind.</p>
+      </div>
+      
+      <div class="guide-profile">
+        <div class="guide-image-carousel">
+          <div class="carousel-container" id="guideCarousel">
+            {maeveImages.map((img, index) => (
+              <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
+                <img src={`https://res.cloudinary.com/dhpnoabqq/image/upload/c_fill,f_auto,fl_progressive,g_face,h_600,q_auto:good,w_400/v1/ireland-tours/ireland-tours/${img}`} 
+                     alt="Maeve professional guide and driver" 
+                     class="guide-img" />
+              </div>
+            ))}
+            <button class="carousel-btn carousel-prev" id="guidePrev">‹</button>
+            <button class="carousel-btn carousel-next" id="guideNext">›</button>
+            <div class="carousel-dots" id="guideDots">
+              {maeveImages.map((_, index) => (
+                <span class={`dot ${index === 0 ? 'active' : ''}`} data-dot={index}></span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="guide-info">
+          <h3 class="guide-name">Maeve Mc'Kevitt</h3>
+          <p class="guide-title">Senior Chauffeur Guide</p>
+          <div class="guide-details">
+            <p class="guide-bio">Born and raised in County Cork, Maeve brings 12 years of professional tour guiding experience combined with her deep knowledge of Irish genealogy. She specializes in ancestral heritage tours and has helped over 200 families reconnect with their Irish roots.</p>
+            
+            <div class="guide-specs">
+              <div class="spec-item">
+                <span class="spec-label">Vehicle:</span>
+                <span class="spec-value">Mercedes-Benz S-Class</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Capacity:</span>
+                <span class="spec-value">2 passengers</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Experience:</span>
+                <span class="spec-value">20 years as tour guide</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Certifications:</span>
+                <span class="spec-value">Licensed Chauffeur, Fáilte Ireland Guide</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Testimonial Section -->
+  <section class="featured-testimonial" id="testimonial">
+    <div class="container">
+      <div class="testimonial-content">
+        <blockquote class="testimonial-quote">
+          "I didn't lift a finger, yet I felt more connected than I have in years. Every moment was hand-picked for us. It wasn't a tour. It was a return."
+        </blockquote>
+        <cite class="testimonial-attribution">— Linda, Chicago</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Stories From Our Guests</h2>
+      </div>
+      <div class="reviews-grid">
+        {testimonials.map((review) => (
+          <div class="review-card">
+            <div class="review-avatar">{review.avatar}</div>
+            <p class="review-text">{review.text}</p>
+            <p class="review-author">{review.author}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Start Your Irish Journey</h2>
+        <p class="section-subtitle">Let us craft your perfect Irish experience</p>
+      </div>
+      <form class="contact-form" action="https://formsubmit.co/maeve.tours@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Tour Inquiry">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_cc" value="maevetours.dev@gmail.com">
+        
+        <div class="form-group">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" id="email" name="email" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone Number (Optional)</label>
+          <input type="tel" id="phone" name="phone" class="form-input">
+        </div>
+        
+        <div class="form-group">
+          <label for="travel-dates" class="form-label">Preferred Travel Dates</label>
+          <input type="text" id="travel-dates" name="travel_dates" class="form-input" placeholder="e.g., June 2025">
+        </div>
+        
+        <div class="form-group">
+          <label for="message" class="form-label">Tell Us About Your Dream Trip</label>
+          <textarea id="message" name="message" class="form-textarea" rows="5" placeholder="What would make your Irish journey special?"></textarea>
+        </div>
+        
+        <button type="submit" class="cta-button">Request Your Callback</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">© 2025 Guided Tours To Ireland. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Call Button -->
+  <a href="tel:+353868377355" class="call-button" aria-label="Call now">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+    </svg>
+    <span>Call Now</span>
+  </a>
+
+  <!-- All JavaScript -->
+  <script>
+    // Hamburger Menu
+    const navToggle = document.getElementById('navToggle');
+    const navList = document.getElementById('navList');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navToggle?.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navList?.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle?.classList.remove('active');
+        navList?.classList.remove('active');
+      });
+    });
+
+    // Tour Modals
+    const tourCards = document.querySelectorAll('.tour-card-container');
+    const modalCloses = document.querySelectorAll('.modal-close');
+
+    tourCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const tourId = card.dataset.tour;
+        const modal = document.getElementById(`modal-${tourId}`);
+        if (modal) {
+          modal.classList.add('active');
+        }
+      });
+    });
+
+    modalCloses.forEach(close => {
+      close.addEventListener('click', () => {
+        const tourId = close.dataset.close;
+        const modal = document.getElementById(`modal-${tourId}`);
+        if (modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    // Close modal on outside click
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+      }
+    });
+
+    // Guide Carousel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('#guideCarousel .carousel-slide');
+    const dots = document.querySelectorAll('#guideDots .dot');
+    const prevBtn = document.getElementById('guidePrev');
+    const nextBtn = document.getElementById('guideNext');
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    prevBtn?.addEventListener('click', () => {
+      showSlide(currentSlide - 1);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      showSlide(currentSlide + 1);
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        showSlide(index);
+      });
+    });
+
+    // Auto-play carousel
+    setInterval(() => {
+      showSlide(currentSlide + 1);
+    }, 5000);
+  </script>
+
+  <style>
+    /* Additional carousel styles */
+    .carousel-container {
+      position: relative;
+    }
+    
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .carousel-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    
+    .carousel-prev {
+      left: 10px;
+    }
+    
+    .carousel-next {
+      right: 10px;
+    }
+    
+    /* Call button */
+    .call-button {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: hsl(var(--accent-primary));
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    
+    .call-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+    
+    /* Hamburger animation */
+    .nav-toggle.active .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-toggle.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .nav-toggle.active .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+  </style>
+</IrelandLayout>
